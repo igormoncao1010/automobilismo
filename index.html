@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caiado 2026 · Acelera Brasil</title>
+  
+  <!-- Favicon (logo na aba) -->
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="shortcut icon" href="logo.png" type="image/png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Archivo', sans-serif;
+      background: #ffffff;
+      color: #1e1e2f;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* ===== HEADER SÓBRIO ===== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 14, 23, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 0.8rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .header.scrolled {
+      padding: 0.5rem 3rem;
+      background: rgba(5, 8, 15, 0.98);
+    }
+
+    .logo img {
+      height: 48px;
+      width: auto;
+      display: block;
+      transition: opacity 0.2s;
+    }
+
+    .logo img:hover {
+      opacity: 0.9;
+    }
+
+    /* Menu Desktop */
+    .nav-menu {
+      display: flex;
+      gap: 2.8rem;
+      align-items: center;
+    }
+
+    .nav-menu a {
+      color: #e8eef4;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+      padding: 0.3rem 0;
+    }
+
+    .nav-menu a:hover {
+      color: #ffffff;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #3b82f6;
+      transition: width 0.2s ease;
+    }
+
+    .nav-menu a:hover::after {
+      width: 100%;
+    }
+
+    .btn-destaque {
+      background: #3b82f6;
+      color: white;
+      padding: 0.6rem 1.8rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 4px 12px rgba(59,130,246,0.25);
+    }
+
+    .btn-destaque:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37,99,235,0.3);
+    }
+    .btn-destaque::after {
+      display: none;
+    }
+
+    /* Hamburguer - Minimalista */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      padding: 10px;
+    }
+    .hamburger span {
+      width: 22px;
+      height: 2px;
+      background: white;
+      margin: 3px 0;
+      transition: 0.2s;
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: #0a0e17;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 2rem;
+      display: none;
+      flex-direction: column;
+      gap: 1.5rem;
+      z-index: 999;
+    }
+    .mobile-menu a {
+      color: #e8eef4;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover {
+      color: #3b82f6;
+    }
+    .mobile-menu .btn-destaque {
+      text-align: center;
+      margin-top: 1rem;
+      border-bottom: none;
+    }
+
+    /* ===== HERO COM VÍDEO LOCAL ===== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 650px;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      color: white;
+      text-align: center;
+      padding: 0 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .hero-content h1 span {
+      color: #3b82f6;
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-content h1 span::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #3b82f6;
+      opacity: 0.3;
+    }
+
+    .hero-content p {
+      font-size: clamp(1.1rem, 3vw, 1.3rem);
+      max-width: 700px;
+      opacity: 0.9;
+      font-weight: 300;
+      letter-spacing: 0.3px;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+    }
+
+    /* Grid de Estatísticas - Moderno */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: #e2e8f0;
+      border: 1px solid #e2e8f0;
+      margin: 3rem 0 5rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .stat-number {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: #0a0e17;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #4b5563;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Títulos de Seção */
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #0a0e17;
+      margin: 4rem 0 1.5rem;
+      position: relative;
+      letter-spacing: -0.01em;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100px;
+      height: 3px;
+      background: #3b82f6;
+    }
+
+    .section-desc {
+      color: #4b5563;
+      font-size: 1.1rem;
+      margin-bottom: 2.5rem;
+      max-width: 700px;
+    }
+
+    /* Categorias - Chips */
+    .categorias {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 2rem 0 3rem;
+    }
+
+    .categoria-item {
+      background: #f3f4f6;
+      color: #1f2937;
+      padding: 0.6rem 1.8rem;
+      border-radius: 4px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      border: 1px solid #e5e7eb;
+      transition: all 0.2s;
+    }
+
+    .categoria-item:hover {
+      background: #3b82f6;
+      color: white;
+      border-color: #3b82f6;
+    }
+
+    /* Cards de Crédito - Minimal */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .credit-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      padding: 2.5rem 2rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .credit-card:hover {
+      border-color: #3b82f6;
+      box-shadow: 0 10px 25px -5px rgba(59,130,246,0.1);
+    }
+
+    .credit-card h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    .credit-card .value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #0a0e17;
+      line-height: 1.2;
+    }
+
+    .credit-card .detail {
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    /* Velocitta com Imagem */
+    .velocitta-section {
+      margin: 5rem 0;
+    }
+
+    .velocitta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+
+    .velocitta-image {
+      height: 100%;
+      min-height: 400px;
+      background-image: url('https://img.estadao.com.br/resources/jpg/4/7/1652389667374.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .velocitta-info {
+      padding: 3rem 3rem 3rem 0;
+    }
+
+    .velocitta-info h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0a0e17;
+      margin-bottom: 1rem;
+    }
+
+    .velocitta-info > p {
+      color: #4b5563;
+      margin-bottom: 2rem;
+    }
+
+    .velocitta-details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin: 2.5rem 0;
+    }
+
+    .detail-item strong {
+      display: block;
+      font-weight: 600;
+      color: #0a0e17;
+      margin-bottom: 0.25rem;
+      font-size: 1rem;
+    }
+
+    .detail-item span {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    .local-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: white;
+      padding: 0.6rem 2rem;
+      border: 1px solid #e5e7eb;
+      color: #0a0e17;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    /* Impacto Grid */
+    .impacto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .impacto-card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 2.5rem;
+    }
+
+    .impacto-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0a0e17;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .impacto-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .impacto-stat {
+      background: white;
+      border: 1px solid #e5e7eb;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+
+    .impacto-stat .number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #3b82f6;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .impacto-stat span {
+      color: #4b5563;
+      font-size: 0.9rem;
+    }
+
+    .impacto-list {
+      list-style: none;
+    }
+
+    .impacto-list li {
+      margin-bottom: 1rem;
+      color: #374151;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .impacto-list li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: #3b82f6;
+      font-weight: 600;
+    }
+
+    /* Projeto Nacional */
+    .projeto-section {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 3.5rem;
+      margin: 4rem 0;
+    }
+
+    .projeto-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .projeto-item {
+      background: white;
+      border: 1px solid #e5e7eb;
+      padding: 2rem;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .projeto-item:hover {
+      border-color: #3b82f6;
+    }
+
+    .projeto-item .number {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #3b82f6;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .projeto-item p {
+      font-weight: 600;
+      color: #0a0e17;
+      margin-bottom: 0.25rem;
+    }
+
+    .projeto-item small {
+      color: #6b7280;
+      font-size: 0.85rem;
+    }
+
+    .declaracao {
+      background: white;
+      border-left: 4px solid #3b82f6;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .declaracao p {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #374151;
+      line-height: 1.6;
+    }
+
+    .autor {
+      margin-top: 1.5rem;
+      font-weight: 600;
+      color: #0a0e17;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .autor::before {
+      content: '';
+      width: 30px;
+      height: 2px;
+      background: #3b82f6;
+    }
+
+    /* PSD Box */
+    .psd-box {
+      text-align: center;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 5rem 2rem;
+      margin: 5rem 0;
+    }
+
+    .psd-box h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #0a0e17;
+      margin: 1rem 0;
+      letter-spacing: -0.01em;
+    }
+
+    .psd-box p {
+      color: #4b5563;
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+    }
+
+    .acelera-badge {
+      display: inline-block;
+      background: #3b82f6;
+      color: white;
+      padding: 1rem 3rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-top: 2.5rem;
+      border: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .acelera-badge:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2.5rem;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+      font-size: 0.9rem;
+    }
+
+    /* Animações suaves */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .cards-grid, .projeto-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .stats-grid, .velocitta-grid, .impacto-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .velocitta-info {
+        padding: 2rem;
+      }
+      
+      .velocitta-image {
+        min-height: 300px;
+      }
+      
+      .header {
+        padding: 0.8rem 1.5rem;
+      }
+      
+      .main {
+        padding: 3rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1px;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .projeto-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-menu {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="logo">
+      <img src="logo.png" alt="Caiado 2026" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%2248%22><rect width=%22120%22 height=%2248%22 fill=%22%233b82f6%22/><text x=%2210%22 y=%2232%22 font-family=%22Archivo%22 font-size=%2220%22 fill=%22%23ffffff%22>CAIADO</text></svg>'">
+    </div>
+    <nav class="nav-menu">
+      <a href="#inicio">Início</a>
+      <a href="#automobilismo">Automobilismo</a>
+      <a href="#credito">Crédito</a>
+      <a href="#velocitta">Velocitta</a>
+      <a href="#impacto">Goiás & Brasil</a>
+      <a href="#" class="btn-destaque">PSD</a>
+    </nav>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#inicio">Início</a>
+    <a href="#automobilismo">Automobilismo</a>
+    <a href="#credito">Crédito</a>
+    <a href="#velocitta">Velocitta</a>
+    <a href="#impacto">Goiás & Brasil</a>
+    <a href="#" class="btn-destaque">PSD MOBILIDADE</a>
+  </div>
+
+  <!-- Hero com vídeo local -->
+  <section class="hero" id="inicio">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="01.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>ACELERA <span>BRASIL</span></h1>
+      <p>Ronaldo Caiado apresenta plano nacional para transformar o automobilismo brasileiro</p>
+    </div>
+  </section>
+
+  <main class="main">
+    <!-- Stats -->
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <div class="stat-number">490M+</div>
+        <div class="stat-label">Audiência Global</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">265K+</div>
+        <div class="stat-label">Entusiastas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">78M+</div>
+        <div class="stat-label">Crescimento Anual</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">1M+</div>
+        <div class="stat-label">Empregos</div>
+      </div>
+    </div>
+
+    <!-- Automobilismo -->
+    <section id="automobilismo">
+      <h2 class="section-title reveal">Automobilismo</h2>
+      <p class="section-desc reveal">O setor que move a economia brasileira</p>
+      
+      <div class="categorias reveal">
+        <span class="categoria-item">Fórmula 1</span>
+        <span class="categoria-item">Porsche Cup</span>
+        <span class="categoria-item">BMW M2</span>
+        <span class="categoria-item">Mercedes-AMG</span>
+        <span class="categoria-item">Formula Inter</span>
+        <span class="categoria-item">Stock Car</span>
+        <span class="categoria-item">Endurance</span>
+        <span class="categoria-item">GT3</span>
+      </div>
+    </section>
+
+    <!-- Crédito -->
+    <section id="credito">
+      <h2 class="section-title reveal">Linhas de Crédito</h2>
+      <p class="section-desc reveal">Financiamento acessível para equipes automobilísticas</p>
+
+      <div class="cards-grid">
+        <div class="credit-card reveal">
+          <h3>Limite</h3>
+          <div class="value">R$ 150 mil</div>
+        </div>
+        <div class="credit-card reveal">
+          <h3>Taxa</h3>
+          <div class="value">3.5% a.a.</div>
+        </div>
+        <div class="credit-card reveal">
+          <h3>Prazo</h3>
+          <div class="value">84 meses</div>
+        </div>
+        <div class="credit-card reveal">
+          <h3>Aprovação</h3>
+          <div class="value">24-48h</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Velocitta com Imagem -->
+    <section id="velocitta" class="velocitta-section">
+      <div class="velocitta-grid reveal">
+        <div class="velocitta-image"></div>
+        <div class="velocitta-info">
+          <h3>Velocitta</h3>
+          <p>O maior autódromo de São Paulo</p>
+          
+          <div class="velocitta-details">
+            <div class="detail-item">
+              <strong>Localização</strong>
+              <span>180 km de São Paulo</span>
+            </div>
+            <div class="detail-item">
+              <strong>Homologação</strong>
+              <span>FIA e CBA</span>
+            </div>
+            <div class="detail-item">
+              <strong>Prefeito</strong>
+              <span>Rodrigo Falsetti (PSD)</span>
+            </div>
+            <div class="detail-item">
+              <strong>Área total</strong>
+              <span>1.452 hectares</span>
+            </div>
+          </div>
+          
+          <div class="local-badge">
+            <span>MOGI GUAÇU · SÃO PAULO</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impacto -->
+    <section id="impacto">
+      <h2 class="section-title reveal">Goiás no Comando</h2>
+      <p class="section-desc reveal">O modelo que vai acelerar o Brasil</p>
+      
+      <div class="impacto-grid">
+        <div class="impacto-card reveal">
+          <h3>Goiás</h3>
+          <div class="impacto-stats">
+            <div class="impacto-stat">
+              <div class="number">+127%</div>
+              <span>eventos</span>
+            </div>
+            <div class="impacto-stat">
+              <div class="number">R$45M</div>
+              <span>incentivos</span>
+            </div>
+          </div>
+          <ul class="impacto-list">
+            <li>Autódromo de Goiânia modernizado</li>
+            <li>5 novas equipes goianas</li>
+            <li>2.500 empregos gerados</li>
+            <li>Escolas de pilotagem em 4 cidades</li>
+            <li>12 títulos nacionais</li>
+          </ul>
+        </div>
+
+        <div class="impacto-card reveal">
+          <h3>Brasil</h3>
+          <ul class="impacto-list">
+            <li>Programa Nacional de Pistas</li>
+            <li>Bolsa-Piloto para talentos</li>
+            <li>Crédito com juros reduzidos</li>
+            <li>Lei do Mecenato do Esporte</li>
+            <li>Escolas técnicas profissionalizantes</li>
+            <li>Calendário Nacional Unificado</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="projeto-section reveal">
+        <h3 style="font-size: 2rem; font-weight: 700;">Projeto Nacional</h3>
+        
+        <div class="projeto-grid">
+          <div class="projeto-item">
+            <div class="number">+15</div>
+            <p>autódromos</p>
+            <small>novos ou revitalizados</small>
+          </div>
+          <div class="projeto-item">
+            <div class="number">+10k</div>
+            <p>empregos</p>
+            <small>diretos</small>
+          </div>
+          <div class="projeto-item">
+            <div class="number">+200</div>
+            <p>pilotos</p>
+            <small>apoiados por ano</small>
+          </div>
+          <div class="projeto-item">
+            <div class="number">1</div>
+            <p>Centro Tecnológico</p>
+            <small>parceria FIA</small>
+          </div>
+          <div class="projeto-item">
+            <div class="number">1</div>
+            <p>Indústria de motores</p>
+            <small>incentivo nacional</small>
+          </div>
+          <div class="projeto-item">
+            <div class="number">🌎</div>
+            <p>Brasil no exterior</p>
+            <small>apoio internacional</small>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
+          <div style="background: white; border: 1px solid #e5e7eb; padding: 0.8rem 2rem;">
+            <span style="font-weight: 800; color: #3b82f6;">R$ 500M</span> fundo anual
+          </div>
+          <div style="background: white; border: 1px solid #e5e7eb; padding: 0.8rem 2rem;">
+            <span style="font-weight: 800; color: #3b82f6;">27</span> centros de excelência
+          </div>
+        </div>
+
+        <div class="declaracao">
+          <p>"O que fizemos em Goiás prova que o automobilismo pode ser um grande gerador de emprego, renda e orgulho nacional. Vamos levar esse modelo para o Brasil inteiro."</p>
+          <div class="autor">
+            Ronaldo Caiado, Governador de Goiás
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PSD Mobilidade -->
+    <div class="psd-box reveal">
+      <h2>PSD Mobilidade</h2>
+      <p>Apoio à pré-candidatura de Ronaldo Caiado à Presidência do Brasil</p>
+      <div class="acelera-badge">
+        ACELERA BRASIL
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>© Caiado 2026 · PSD Mobilidade</p>
+    </footer>
+  </main>
+
+  <script>
+    // Hamburguer menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      if (mobileMenu.style.display === 'flex') {
+        mobileMenu.style.display = 'none';
+      } else {
+        mobileMenu.style.display = 'flex';
+      }
+    });
+
+    // Header scroll
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+          // Fecha menu mobile
+          mobileMenu.style.display = 'none';
+          hamburger.classList.remove('active');
+        }
+      });
+    });
+
+    // Reveal animations
+    function reveal() {
+      document.querySelectorAll('.reveal').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+          el.classList.add('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', reveal);
+    reveal();
+  </script>
+</body>
+</html>
